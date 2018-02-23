@@ -1,4 +1,4 @@
-- tested with Violentmonkey & Firefox 58
+- tested with Violentmonkey v2.8.28 & Firefox 58.0.2
 - the execution order I use is
   - gwScriptHelper
   - gwReplacePngWithSvg
