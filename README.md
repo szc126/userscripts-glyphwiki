@@ -1,7 +1,8 @@
-the execution order I use is
-
-- gwScriptHelper
-- gwReplacePngWithSvg
-- gwAddGlyphBoundingBoxes
-- gwOpenProtectedGlyphInGlyphEditor
-- gwTabIndex
+- tested with Violentmonkey & Firefox 58
+- the execution order I use is
+  - gwScriptHelper
+  - gwReplacePngWithSvg
+  - gwAddGlyphBoundingBoxes
+  - gwOpenProtectedGlyphInGlyphEditor
+  - gwTabIndex
+- GNU GPL v3.0
