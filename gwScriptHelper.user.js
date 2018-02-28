@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 1
+// @version 2
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -165,6 +165,7 @@ for (let i = 0; i < glyphImages.length; i++) {
   let pxSize = glyphImages[i].src.match(/\.(\d+)px\./);
   let fileFormat = glyphImages[i].src.match(/\.(\w+)$/);
   pxSize = (pxSize ? pxSize[1] : "200");
+  if (glyphImages[i].src.indexOf("error.png") > -1) pxSize = "Error";
   fileFormat = (fileFormat ? fileFormat[1] : "png");
 
   glyphImages[i].classList.add("iThumb" + pxSize);
