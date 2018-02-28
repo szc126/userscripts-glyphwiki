@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: replace PNG with SVG
-// @version 1
+// @version 2
 // @namespace szc
 // @description boiii we svg now
 // @match *://glyphwiki.org/wiki/*
@@ -13,9 +13,11 @@ if (true) {
   let pngs = document.querySelectorAll(".iThumbPng"); // querySelectorAll because it's not live and .length won't change...
 
   for (let i = 0; i < pngs.length; i++) {
-    pngs[i].src = pngs[i].src.replace(/\.\d+px\./, ".").replace(/\.png$/, ".svg");
-    pngs[i].classList.remove("iThumbPng");
-    pngs[i].classList.add("iThumbSvg");
+    if (!pngs[i].classList.contains("iThumbError")) {
+      pngs[i].src = pngs[i].src.replace(/\.\d+px\./, ".").replace(/\.png$/, ".svg");
+      pngs[i].classList.remove("iThumbPng");
+      pngs[i].classList.add("iThumbSvg");
+    }
   }
 }
 
