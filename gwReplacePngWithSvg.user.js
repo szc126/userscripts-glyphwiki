@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: replace PNG with SVG
-// @version 2
+// @version 3
 // @namespace szc
 // @description boiii we svg now
 // @match *://glyphwiki.org/wiki/*
