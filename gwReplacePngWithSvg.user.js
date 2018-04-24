@@ -15,8 +15,7 @@ if (true) {
   for (let i = 0; i < pngs.length; i++) {
     if (!pngs[i].classList.contains("iThumbError")) {
       pngs[i].src = pngs[i].src.replace(/\.\d+px\./, ".").replace(/\.png$/, ".svg");
-      pngs[i].classList.remove("iThumbPng");
-      pngs[i].classList.add("iThumbSvg");
+      pngs[i].classList.replace("iThumbPng", "iThumbSvg");
     }
   }
 }
