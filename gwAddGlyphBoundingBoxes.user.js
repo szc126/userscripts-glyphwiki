@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add glyph bounding boxes
-// @version 1
+// @version 2
 // @namespace szc
 // @description Add bounding boxes to 200px images, similar to the one in the Glyph Editor
 // @match *://glyphwiki.org/wiki/*
@@ -10,42 +10,71 @@
 // ==/UserScript==
 
 function addClasses() {
-	let images = document.getElementsByClassName("iThumb200");
+	let pxSizes = [50, 100, 200];
+	for (let i = 0; i < pxSizes.length; i++) {
+		let images = document.getElementsByClassName("iThumb" + pxSizes[i]);
 
-	for (let i = 0; i < images.length; i++) {
-		let image = images.item(i);
-		let wrapper = document.createElement('div');
-		let boundingBox = document.createElement('div');
+		for (let i = 0; i < images.length; i++) {
+			let image = images.item(i);
+			let wrapper = document.createElement('div');
+			let boundingBox = document.createElement('div');
 
-		wrapper.classList.add('x-glyph-200-wrapper');
-		boundingBox.classList.add('x-glyph-200-bounding-box');
+			wrapper.classList.add('x-thumbWrapper');
+			boundingBox.classList.add('x-thumbBoundingBox');
 
-		wrapper.innerHTML = image.outerHTML + boundingBox.outerHTML;
-		image.outerHTML = wrapper.outerHTML;
+			wrapper.innerHTML = image.outerHTML + boundingBox.outerHTML;
+			image.outerHTML = wrapper.outerHTML;
+		}
 	}
 }
 
 function addStyles() {
 	GM_addStyle(`
-		.x-glyph-200-wrapper {
+		.x-thumbWrapper {
 			position: relative;
 			display: inline-block;
 		}
 
-		.x-glyph-200-bounding-box {
+		.x-thumbBoundingBox{
+			--margin: calc((13/200) * var(--target));
 			position: absolute;
 			top: 0;
-			border: 1px dotted darkgrey;
+			border: 1px dotted crimson;
 			content: "";
-			height: 176px;
-			width: 176px;
-			margin-top: calc(12px + 1em);
-			margin-left: 12px;
+			height: calc(var(--target) - (var(--margin)) * 2);
+			width: calc(var(--target) - (var(--margin)) * 2);
+			margin-top: calc((var(--margin)));
+			margin-left: calc((var(--margin)));
 		}
 
-		.compare ~ .x-glyph-200-bounding-box {
-			margin-top: calc(12px + 1em);
-			margin-left: calc(12px + 1em);
+		.iThumb200 ~ .x-thumbBoundingBox {
+			--target: 200px;
+		}
+
+		.iThumb100 ~ .x-thumbBoundingBox {
+			--target: 100px;
+		}
+
+		.iThumb50 ~ .x-thumbBoundingBox {
+			--target: 50px;
+		}
+
+		/* グリフの当ページ、最初にリストアップされてる奴ら */
+
+		div.right_pane img.glyph ~ .x-thumbBoundingBox {
+			margin-top: calc((var(--margin)) + 1em);
+		}
+
+		div.right_pane img.page ~ .x-thumbBoundingBox {
+			margin-top: calc((var(--margin)) + 0.5em);
+		}
+
+		/* 100 */
+
+		div.right_pane .thumb ~ .x-thumbBoundingBox,
+		div.right_pane .thumb100 ~ .x-thumbBoundingBox {
+			margin-top: calc((var(--margin)) + 2px);
+			margin-left: calc((var(--margin)) + 2px);
 		}
 	`);
 }
