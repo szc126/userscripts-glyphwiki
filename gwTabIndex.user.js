@@ -10,18 +10,18 @@
 // ==/UserScript==
 
 if (gwData.action == "edit" || gwData.action == "preview") {
-  let eds = document.getElementsByClassName("ed");
-  let order = {
-    edGlyphEditor: 101,
-    edRelated: 103,
-    edTextbox: 102, // textbox > related
-    edSummary: 104,
-    edPreview: 106,
-    edSubmit: 105, // submit > preview
-  }
+	let eds = document.getElementsByClassName("ed");
+	let order = {
+		edGlyphEditor: 101,
+		edRelated: 103,
+		edTextbox: 102, // textbox > related
+		edSummary: 104,
+		edPreview: 106,
+		edSubmit: 105, // submit > preview
+	}
 
-  for (let i = 0; i < eds.length; i++) {
-    let edName = eds[i].id;
-    eds[i].tabIndex = order[edName];
-  }
+	for (let i = 0; i < eds.length; i++) {
+		let edName = eds[i].id;
+		eds[i].tabIndex = order[edName];
+	}
 }
