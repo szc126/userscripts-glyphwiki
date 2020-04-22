@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add glyph bounding boxes
-// @version 3
+// @version 4
 // @namespace szc
 // @description Add bounding boxes to 200px images, similar to the one in the Glyph Editor
 // @match *://glyphwiki.org/wiki/*
@@ -36,7 +36,7 @@ function addStyles() {
 		}
 
 		.x-thumbBoundingBox{
-			--margin: calc((13/200) * var(--target));
+			--margin: calc((12/200) * var(--target));
 			position: absolute;
 			top: 0;
 			border: 1px dotted crimson;
