@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add glyph bounding boxes
-// @version 2
+// @version 3
 // @namespace szc
 // @description Add bounding boxes to 200px images, similar to the one in the Glyph Editor
 // @match *://glyphwiki.org/wiki/*
@@ -43,8 +43,7 @@ function addStyles() {
 			content: "";
 			height: calc(var(--target) - (var(--margin)) * 2);
 			width: calc(var(--target) - (var(--margin)) * 2);
-			margin-top: calc((var(--margin)));
-			margin-left: calc((var(--margin)));
+			margin: calc((var(--margin)));
 		}
 
 		.iThumb200 ~ .x-thumbBoundingBox {
@@ -59,22 +58,41 @@ function addStyles() {
 			--target: 50px;
 		}
 
-		/* グリフの当ページ、最初にリストアップされてる奴ら */
+		/* グリフの当ページ、最初にリストアップされる奴ら */
 
 		div.right_pane img.glyph ~ .x-thumbBoundingBox {
-			margin-top: calc((var(--margin)) + 1em);
+			margin:
+				calc((var(--margin)) + 1em)
+				calc((var(--margin)) + 0em)
+			;
 		}
 
 		div.right_pane img.page ~ .x-thumbBoundingBox {
-			margin-top: calc((var(--margin)) + 0.5em);
+			margin:
+				calc((var(--margin)) + 0em)
+				calc((var(--margin)) + 0.5em)
+			;
 		}
 
 		/* 100 */
 
 		div.right_pane .thumb ~ .x-thumbBoundingBox,
 		div.right_pane .thumb100 ~ .x-thumbBoundingBox {
-			margin-top: calc((var(--margin)) + 2px);
-			margin-left: calc((var(--margin)) + 2px);
+			margin:
+				calc((var(--margin)) + 2px)
+			;
+		}
+
+		/* 「引用する旧部品の更新」（グリフのページの下に出現する奴） */
+
+		div.right_pane img.compare ~ .x-thumbBoundingBox {
+			font-size: 90%;
+			margin:
+				calc((var(--margin)) + 1em)
+				calc((var(--margin)) + 1em)
+				calc((var(--margin)) + 0.5em)
+				calc((var(--margin)) + 1em)
+			;
 		}
 	`);
 }
