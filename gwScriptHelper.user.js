@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 2
+// @version 3
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -158,7 +158,6 @@ if (gwData.ns == "glyph") {
 }
 
 // Add classes to thumbnails (.?Thumb100, .?ThumbPng, etc.)
-// (GlyphWiki already defines .thumb100)
 let glyphImages = document.querySelectorAll(".glyph, .thumb");
 
 for (let i = 0; i < glyphImages.length; i++) {
@@ -173,6 +172,18 @@ for (let i = 0; i < glyphImages.length; i++) {
 
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
 	glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
+}
+
+glyphImages = document.querySelectorAll(".thumb100");
+
+for (let i = 0; i < glyphImages.length; i++) {
+	let pxSize = 100;
+
+	glyphImages[i].classList.add("iThumb" + pxSize);
+	//glyphImages[i].classList.add("iThumbPng");
+
+	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
+	//glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
 }
 
 // CSS classes for elements on the edit page
