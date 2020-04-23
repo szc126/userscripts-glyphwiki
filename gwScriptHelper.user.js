@@ -19,7 +19,7 @@ function capitalizeFirstLetter(string) {
 }
 
 // Extract data from a page name
-function pageAnalyze(page) {
+function analyzePage(page) {
 	let data = {};
 	temp = page.split(":");
 
@@ -29,7 +29,7 @@ function pageAnalyze(page) {
 }
 
 // Extract data from the page name of a user glyph
-function userGlyphAnalyze(page) {
+function analyzeUserGlyph(page) {
 	let data = {};
 	temp = page.split("_");
 
@@ -66,10 +66,10 @@ gwData["lang"] = document.documentElement.lang;
 
 gwData["page"] = window.location.pathname.match(/\/([^/]+)$/)[1];
 
-temp = pageAnalyze(gwData.page);
+temp = analyzePage(gwData.page);
 gwData["ns"] = temp.ns;
 
-temp = userGlyphAnalyze(gwData.page);
+temp = analyzeUserGlyph(gwData.page);
 gwData["isUserGlyph"] = (temp.isUserGlyph ? "1" : null);
 gwData["userGlyphUser"] = temp.userGlyphUser;
 gwData["userGlyphPage"] = temp.userGlyphPage;
