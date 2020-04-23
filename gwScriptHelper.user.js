@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 5
+// @version 6
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -206,7 +206,8 @@ for (let i = 0; i < tabAs.length; i++) {
 // IDs for elements on the edit page
 if (gwData.action == "edit" || gwData.action == "preview") {
 	temp = {
-		glyphEditor: document.querySelector("[action=\"/glyphEditor.cgi\"]"),
+		glyphEditorForm: document.querySelector("form[action=\"/glyphEditor.cgi\"]"),
+		glyphEditor: document.querySelector("form[action=\"/glyphEditor.cgi\"] input[type=submit]"),
 		related: document.querySelector("a + input[name=related]"),
 		textbox: document.querySelector("textarea[name=textbox]"),
 		summary: document.querySelector("input[name=summary]"),
