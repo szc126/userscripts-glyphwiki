@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name GlyphWiki: tabIndex
-// @version 1
+// @name GlyphWiki: tab index and access key
+// @version 2
 // @namespace szc
 // @description yee
 // @match *://glyphwiki.org/wiki/*
@@ -8,6 +8,8 @@
 // @run-at document-idle
 // @grant none
 // ==/UserScript==
+
+// XXX: mutationObserver
 
 if (gwData.action == "edit" || gwData.action == "preview") {
 	let eds = document.getElementsByClassName("ed");
@@ -23,5 +25,23 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 	for (let i = 0; i < eds.length; i++) {
 		let edName = eds[i].id;
 		eds[i].tabIndex = order[edName];
+	}
+}
+
+let accessKeys = {
+	caMain: 'c',
+	caTalk: 't',
+	caEdit: 'e',
+	caHistory: 'h',
+
+	edGlyphEditor: 'a', // not related to MediaWiki
+	edPreview: 'p',
+	edSubmit: 's',
+}
+
+for (let id in accessKeys) {
+	let el = document.getElementById(id);
+	if (el) {
+		el.accessKey = accessKeys[id];
 	}
 }
