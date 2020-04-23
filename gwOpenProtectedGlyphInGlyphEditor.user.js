@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: open protected glyph in glyph editor
-// @version 1
+// @version 2
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -14,7 +14,7 @@ if (gwData.protected) {
 	let form = document.createElement("form");
 	let inputs = [];
 
-	form.id = "edGlyphEditor"; form.tabIndex = 101; // from script helper
+	form.id = "edGlyphEditor";
 	form.className = "centering"; form.method = "post"; form.action = "/glyphEditor.cgi";
 
 	for (let i = 0; i < 5; i++) {
