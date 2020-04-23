@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 4
+// @version 5
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -186,7 +186,7 @@ for (let i = 0; i < glyphImages.length; i++) {
 	//glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
 }
 
-// CSS classes for tabs
+// IDs for tabs
 let tabAs = document.querySelectorAll(".tab a");
 temp = {
 	'action=edit': 'caEdit',
@@ -203,7 +203,7 @@ for (let i = 0; i < tabAs.length; i++) {
 	];
 }
 
-// CSS classes for elements on the edit page
+// IDs for elements on the edit page
 if (gwData.action == "edit" || gwData.action == "preview") {
 	temp = {
 		glyphEditor: document.querySelector("[action=\"/glyphEditor.cgi\"]"),
