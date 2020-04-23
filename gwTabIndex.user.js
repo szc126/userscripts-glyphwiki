@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: tab index and access key
-// @version 2
+// @version 3
 // @namespace szc
 // @description yee
 // @match *://glyphwiki.org/wiki/*
@@ -15,11 +15,11 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 	let eds = document.getElementsByClassName("ed");
 	let order = {
 		edGlyphEditor: 101,
-		edRelated: 103,
-		edTextbox: 102, // textbox > related
+		edRelated: 102,
+		edTextbox: 103,
 		edSummary: 104,
-		edPreview: 106,
-		edSubmit: 105, // submit > preview
+		edPreview: 105,
+		edSubmit: 106,
 	}
 
 	for (let i = 0; i < eds.length; i++) {
