@@ -6,4 +6,3 @@
   - gwOpenProtectedGlyphInGlyphEditor
   - gwTabIndex
   - gwAddContextMenus
-- GNU GPL v3.0
