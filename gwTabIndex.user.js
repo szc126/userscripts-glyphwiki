@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: tab index and access key
-// @version 3
+// @version 4
 // @namespace szc
 // @description yee
 // @match *://glyphwiki.org/wiki/*
@@ -12,8 +12,7 @@
 // XXX: mutationObserver
 
 if (gwData.action == "edit" || gwData.action == "preview") {
-	let eds = document.getElementsByClassName("ed");
-	let order = {
+	let tabIndex = {
 		edGlyphEditor: 101,
 		edRelated: 102,
 		edTextbox: 103,
@@ -22,9 +21,11 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 		edSubmit: 106,
 	}
 
-	for (let i = 0; i < eds.length; i++) {
-		let edName = eds[i].id;
-		eds[i].tabIndex = order[edName];
+	for (let id in tabIndex) {
+		let el = document.getElementById(id);
+		if (el) {
+			el.tabIndex = tabIndex[id];
+		}
 	}
 }
 
