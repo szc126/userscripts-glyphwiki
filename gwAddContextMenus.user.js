@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add context menus
-// @version 3
+// @version 4
 // @namespace szc
 // @description -
 // @match *://glyphwiki.org/wiki/*
@@ -30,21 +30,21 @@ function removePageSuffix(page) {
 
 function createIThumbMenu(event) {
 	let menu = document.createElement('menu');
-	menu.id = 'iThumbMenu-' + this.dataset.page;
+	menu.id = 'iThumbMenu-' + event.target.dataset.page;
 	menu.type = 'context';
 
 	let menuItem;
 
 	menuItem = document.createElement('menuitem');
-	menuItem.icon = this.src;
-	menuItem.innerText = 'グリフ名をコピー' + (this.dataset.page ? '：' + this.dataset.page : '');
-	menuItem.disabled = (!this.dataset.page);
+	menuItem.icon = event.target.src;
+	menuItem.innerText = 'グリフ名をコピー' + (event.target.dataset.page ? '：' + event.target.dataset.page : '');
+	menuItem.disabled = (!event.target.dataset.page);
 	menuItem.onclick = function() {
 		updateClipboard(page);
 	};
 	menu.appendChild(menuItem);
 
-	let pageNoSuffix = removePageSuffix(this.dataset.page);
+	let pageNoSuffix = removePageSuffix(event.target.dataset.page);
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'グリフ名（接尾無し）をコピー' + (pageNoSuffix ? '：' + pageNoSuffix : '');
 	menuItem.disabled = (!pageNoSuffix);
@@ -72,6 +72,7 @@ function createBodyMenu(event) {
 	let menuItem;
 
 	menuItem = document.createElement('menuitem');
+	menuItem.icon = document.querySelector('.glyphMain .iThumb50').src;
 	menuItem.innerText = 'グリフ名をコピー' + (document.body.dataset.page ? '：' + document.body.dataset.page : '');
 	menuItem.disabled = (!document.body.dataset.page);
 	menuItem.onclick = function() {
@@ -103,9 +104,15 @@ function addIThumbMenu() {
 	let iThumbs = document.getElementsByClassName('iThumb');
 
 	for (let i = 0; i < iThumbs.length; i++) {
+		let menuId = 'iThumbMenu-' + iThumbs[i].dataset.page;
+
 		if (iThumbs[i].dataset.page) {
-			iThumbs[i].setAttribute('contextmenu', 'iThumbMenu-' + iThumbs[i].dataset.page);
-			iThumbs[i].addEventListener('contextmenu', createIThumbMenu);
+			iThumbs[i].setAttribute('contextmenu', menuId);
+			iThumbs[i].addEventListener('contextmenu', function(event) {
+				if (!document.getElementById(menuId)) {
+					createIThumbMenu(event);
+				}
+			});
 		}
 	}
 }
@@ -116,4 +123,6 @@ function addBodyMenu() {
 }
 
 addIThumbMenu();
-if (document.body.dataset.ns == 'glyph') addBodyMenu();
+if (document.body.dataset.ns == 'glyph') {
+	addBodyMenu();
+}
