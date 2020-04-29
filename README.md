@@ -6,3 +6,4 @@
   - gwOpenProtectedGlyphInGlyphEditor
   - gwTabIndex
   - gwAddContextMenus
+  - gwUnicodeGlyphNames
