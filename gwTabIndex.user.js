@@ -11,7 +11,7 @@
 
 // XXX: mutationObserver
 
-if (gwData.action == "edit" || gwData.action == "preview") {
+if (gwData.action == 'edit' || gwData.action == 'preview') {
 	let tabIndex = {
 		edGlyphEditor: 101,
 		edRelated: 102,

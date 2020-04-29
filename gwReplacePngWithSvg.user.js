@@ -29,7 +29,7 @@ style.innerHTML = `
 	}
 
 	.glyphMain.pThumb200.pThumbSvg + .glyphMain.pThumb200.pThumbPng {
-		display: none; /* begone thot */
+		display: none;
 	}
 `;
 document.head.appendChild(style);

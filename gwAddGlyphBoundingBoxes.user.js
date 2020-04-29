@@ -10,7 +10,6 @@
 // ==/UserScript==
 
 let images = document.querySelectorAll('.iThumb50, .iThumb100, .iThumb200');
-
 for (let i = 0; i < images.length; i++) {
 	let image = images.item(i);
 	let wrapper = document.createElement('div');
