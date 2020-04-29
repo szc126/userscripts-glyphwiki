@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 6
+// @version 7
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -50,7 +50,7 @@ let sub = h1.nextElementSibling;
 h1.id = "firstHeading";
 sub.id = "siteSub";
 
-// Collect gwData from query string
+// Extract data from query string
 let queryStringRe = /[?&]([^=]+)=([^?&]+)/g;
 while (1) {
 	temp = queryStringRe.exec(window.location.search);
@@ -60,8 +60,11 @@ while (1) {
 		break;
 	}
 }
+if (gwData.action == null) {
+	gwData.action = "view";
+}
 
-// Collect gwData from page elements
+// Extract data from page elements
 gwData["lang"] = document.documentElement.lang;
 
 gwData["page"] = window.location.pathname.match(/\/([^/]+)$/)[1];
@@ -88,34 +91,26 @@ if (temp) {
 temp = document.querySelector("#firstHeading ~ .message + hr");
 gwData["protected"] = (temp ? "1" : null);
 
-// Write gwData to <body>
-
-let gwDataDoNotWriteToBody = {
-	lang: true,
-	value: true, // [[Special:Renewall]]
-	textbox: true,
-}
-for (let k in gwData) {
-	let v = gwData[k];
-	if (v != null && !gwDataDoNotWriteToBody[k]) {
-		document.body.classList.add(k + "-" + v.replace(/[:]/g, "_"));
-	}
-}
-
 // ns-specific
 if (gwData.ns == "glyph") {
-	if (gwData.action == null) {
+	if (gwData.action == "view") {
 		// #aliasSub
 		let aliasSub = sub.nextElementSibling.nextElementSibling; // #siteSub + br + *
 		if (aliasSub.tagName == "DIV" && aliasSub.classList.contains("texts")) aliasSub.id = "aliasSub";
 
 		temp = {};
-		// #glyphCaption, #revisionNumber
+		// #glyphCaption, #revision
 		if (h1.children.length == 2) {
 			temp.glyphCaption = h1.children[0];
-			temp.revisionNumber = h1.children[1];
+			temp.revision = h1.children[1];
 		} else if (h1.children.length == 1) {
-			temp.revisionNumber = h1.children[0];
+			if (h1.children[0].innerText.startsWith('(@')) {
+				// example: existing glyph, and the GW software does not provide a caption
+				temp.revision = h1.children[0];
+			} else {
+				// example: uncreated glyph, and the GW software provides a caption
+				temp.glyphCaption = h1.children[0];
+			}
 		}
 		for (let k in temp) {
 			temp[k].id = k; // add ID
@@ -157,9 +152,32 @@ if (gwData.ns == "glyph") {
 	}
 }
 
-// Add classes to thumbnails (.?Thumb100, .?ThumbPng, etc.)
-let glyphImages = document.querySelectorAll(".glyph, .thumb");
+// Write data to <body>
+let gwDataDoNotWriteToClass = {
+	lang: true,
+	glyphCaption: true,
+}
+let gwDataDoNotWriteToDataAttribute = {
+	lang: true,
+}
+for (let k in gwData) {
+	let v = gwData[k];
+	if (v != null && !gwDataDoNotWriteToClass[k]) {
+		document.body.classList.add(k + "-" + v.replace(/[:]/g, "_"));
+	}
+	if (v != null && !gwDataDoNotWriteToDataAttribute[k]) {
+		document.body.dataset[k] = v;
+	}
+}
 
+// print gwData to console for debugging
+console.log(gwData);
+
+// Add classes to thumbnails (.?Thumb100, .?ThumbPng, etc.)
+// Also add data attributes
+let glyphImages;
+
+glyphImages = document.querySelectorAll(".glyph, .thumb");
 for (let i = 0; i < glyphImages.length; i++) {
 	let pxSize = glyphImages[i].src.match(/\.(\d+)px\./);
 	let fileFormat = glyphImages[i].src.match(/\.(\w+)$/);
@@ -167,23 +185,38 @@ for (let i = 0; i < glyphImages.length; i++) {
 	if (glyphImages[i].src.indexOf("error.png") > -1) pxSize = "Error";
 	fileFormat = (fileFormat ? fileFormat[1] : "png");
 
+	glyphImages[i].classList.add("iThumb");
 	glyphImages[i].classList.add("iThumb" + pxSize);
 	glyphImages[i].classList.add("iThumb" + capitalizeFirstLetter(fileFormat));
 
+	glyphImages[i].parentNode.classList.add("pThumb");
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
 	glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
+
+	let page = glyphImages[i].src.match(/glyph\/([^@.]+)/);
+	if (page != null) {
+		glyphImages[i].dataset["page"] = page[1];
+		glyphImages[i].parentNode.dataset["page"] = page[1];
+	}
 }
 
 glyphImages = document.querySelectorAll(".thumb100");
-
 for (let i = 0; i < glyphImages.length; i++) {
 	let pxSize = 100;
 
+	glyphImages[i].classList.add("iThumb");
 	glyphImages[i].classList.add("iThumb" + pxSize);
 	//glyphImages[i].classList.add("iThumbPng");
 
+	glyphImages[i].parentNode.classList.add("pThumb");
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
 	//glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
+
+	let page = glyphImages[i].src.match(/glyph\/([^@.]+)/);
+	if (page != null) {
+		glyphImages[i].dataset["page"] = page[1];
+		glyphImages[i].parentNode.dataset["page"] = page[1];
+	}
 }
 
 // IDs for tabs
@@ -223,6 +256,3 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 		}
 	}
 }
-
-// print gwData to console for debugging
-console.log(gwData);
