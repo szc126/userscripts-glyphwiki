@@ -2,7 +2,7 @@
 // @name GlyphWiki: add context menus
 // @version 3
 // @namespace szc
-// @description piyo
+// @description -
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*
 // @run-at document-idle

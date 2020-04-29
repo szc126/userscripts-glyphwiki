@@ -2,7 +2,7 @@
 // @name GlyphWiki: open protected glyph in glyph editor
 // @version 2
 // @namespace szc
-// @description piyo
+// @description -
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*
 // @run-at document-idle

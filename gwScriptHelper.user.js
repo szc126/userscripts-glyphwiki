@@ -2,7 +2,7 @@
 // @name GlyphWiki script helper
 // @version 9
 // @namespace szc
-// @description piyo
+// @description -
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*
 // @grant none

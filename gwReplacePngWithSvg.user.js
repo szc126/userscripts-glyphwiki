@@ -2,7 +2,7 @@
 // @name GlyphWiki: replace PNG with SVG
 // @version 4
 // @namespace szc
-// @description boiii we svg now
+// @description -
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*
 // @run-at document-idle

@@ -2,7 +2,7 @@
 // @name GlyphWiki: tab index and access key
 // @version 4
 // @namespace szc
-// @description yee
+// @description -
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*
 // @run-at document-idle

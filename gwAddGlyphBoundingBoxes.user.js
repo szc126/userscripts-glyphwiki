@@ -2,7 +2,7 @@
 // @name GlyphWiki: add glyph bounding boxes
 // @version 6
 // @namespace szc
-// @description Add bounding boxes to 200px images, similar to the one in the Glyph Editor
+// @description Add bounding boxes to images, similar to the one in the Glyph Editor
 // @match *://glyphwiki.org/wiki/*
 // @match *://*.glyphwiki.org/wiki/*/*
 // @run-at document-idle
