@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add context menus
-// @version 1
+// @version 2
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -72,14 +72,6 @@ function createBodyMenu(event) {
 	let menuItem;
 
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = '関連字をコピー' + (document.body.dataset.related ? '：' + document.body.dataset.related : '');
-	menuItem.disabled = (!document.body.dataset.related);
-	menuItem.onclick = function() {
-		updateClipboard(document.body.dataset.related);
-	};
-	menu.appendChild(menuItem);
-
-	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'グリフ名をコピー' + (document.body.dataset.page ? '：' + document.body.dataset.page : '');
 	menuItem.disabled = (!document.body.dataset.page);
 	menuItem.onclick = function() {
@@ -93,6 +85,14 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!pageNoSuffix);
 	menuItem.onclick = function() {
 		updateClipboard(pageNoSuffix);
+	};
+	menu.appendChild(menuItem);
+
+	menuItem = document.createElement('menuitem');
+	menuItem.innerText = '関連字をコピー' + (document.body.dataset.related ? '：' + document.body.dataset.related : '');
+	menuItem.disabled = (!document.body.dataset.related);
+	menuItem.onclick = function() {
+		updateClipboard(document.body.dataset.related);
 	};
 	menu.appendChild(menuItem);
 
