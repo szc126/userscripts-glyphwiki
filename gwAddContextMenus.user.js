@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add context menus
-// @version 2
+// @version 3
 // @namespace szc
 // @description piyo
 // @match *://glyphwiki.org/wiki/*
@@ -103,8 +103,10 @@ function addIThumbMenu() {
 	let iThumbs = document.getElementsByClassName('iThumb');
 
 	for (let i = 0; i < iThumbs.length; i++) {
-		iThumbs[i].setAttribute('contextmenu', 'iThumbMenu-' + iThumbs[i].dataset.page);
-		iThumbs[i].addEventListener('contextmenu', createIThumbMenu);
+		if (iThumbs[i].dataset.page) {
+			iThumbs[i].setAttribute('contextmenu', 'iThumbMenu-' + iThumbs[i].dataset.page);
+			iThumbs[i].addEventListener('contextmenu', createIThumbMenu);
+		}
 	}
 }
 
