@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add context menus
-// @version 4
+// @version 5
 // @namespace szc
 // @description -
 // @match *://glyphwiki.org/wiki/*
@@ -23,7 +23,7 @@ function updateClipboard(text) {
 
 function removePageSuffix(page) {
 	if (page.match(/^(cdp-|u[0-9a-f]{4,})/)) {
-		return page.replace(/(-(var|itaiji)-\d{3}|-\d{2}|-[a-z]{1,}|-[a-z]{1,}\d{2})$/g, '');
+		return page.replace(/(-(var|itaiji)-\d{3}|-([a-z]{1,2}|)(\d{2}|))+$/g, '');
 	}
 	return page;
 }
