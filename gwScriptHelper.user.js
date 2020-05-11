@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki script helper
-// @version 9
+// @version 10
 // @namespace szc
 // @description -
 // @match *://glyphwiki.org/wiki/*
@@ -19,9 +19,9 @@ function capitalizeFirstLetter(string) {
 }
 
 // Extract data from a page name
-function analyzePage(page) {
+function analyzePage(name) {
 	let data = {};
-	temp = page.split(":");
+	temp = name.split(":");
 
 	data["ns"] = (temp[1] ? temp[0].toLowerCase() : "glyph");
 
@@ -29,9 +29,9 @@ function analyzePage(page) {
 }
 
 // Extract data from the page name of a user glyph
-function analyzeUserGlyph(page) {
+function analyzeUserGlyph(name) {
 	let data = {};
-	temp = page.split("_");
+	temp = name.split("_");
 
 	if (temp[1]) {
 		data["isUserGlyph"] = true;
@@ -67,12 +67,12 @@ if (gwData.action == null) {
 // Extract data from page elements
 gwData["lang"] = document.documentElement.lang;
 
-gwData["page"] = window.location.pathname.match(/\/([^/]+)$/)[1];
+gwData["name"] = window.location.pathname.match(/\/([^/]+)$/)[1];
 
-temp = analyzePage(gwData.page);
+temp = analyzePage(gwData.name);
 gwData["ns"] = temp.ns;
 
-temp = analyzeUserGlyph(gwData.page);
+temp = analyzeUserGlyph(gwData.name);
 gwData["isUserGlyph"] = (temp.isUserGlyph ? "1" : null);
 gwData["userGlyphUser"] = temp.userGlyphUser;
 gwData["userGlyphPage"] = temp.userGlyphPage;
@@ -193,10 +193,10 @@ for (let i = 0; i < glyphImages.length; i++) {
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
 	glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
 
-	let page = glyphImages[i].src.match(/glyph\/([^@.]+)/);
-	if (page != null) {
-		glyphImages[i].dataset["page"] = page[1];
-		glyphImages[i].parentNode.dataset["page"] = page[1];
+	let name = glyphImages[i].src.match(/glyph\/([^@.]+)/);
+	if (name != null) {
+		glyphImages[i].dataset["name"] = name[1];
+		glyphImages[i].parentNode.dataset["name"] = name[1];
 	}
 }
 
@@ -212,10 +212,10 @@ for (let i = 0; i < glyphImages.length; i++) {
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
 	//glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
 
-	let page = glyphImages[i].src.match(/glyph\/([^@.]+)/);
-	if (page != null) {
-		glyphImages[i].dataset["page"] = page[1];
-		glyphImages[i].parentNode.dataset["page"] = page[1];
+	let name = glyphImages[i].src.match(/glyph\/([^@.]+)/);
+	if (name != null) {
+		glyphImages[i].dataset["name"] = name[1];
+		glyphImages[i].parentNode.dataset["name"] = name[1];
 	}
 }
 
