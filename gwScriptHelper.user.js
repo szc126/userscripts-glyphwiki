@@ -1,48 +1,17 @@
 // ==UserScript==
 // @name        GlyphWiki script helper
-// @version     10
+// @version     11
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @grant       none
+// @inject-into content
 // ==/UserScript==
 
 gwData = {};
 
 let temp;
-
-// Capitalize first letter of a string
-// (https://stackoverflow.com/a/1026087)
-function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-// Extract data from a page name
-function analyzePage(name) {
-	let data = {};
-	temp = name.split(":");
-
-	data["ns"] = (temp[1] ? temp[0].toLowerCase() : "glyph");
-
-	return data;
-}
-
-// Extract data from the page name of a user glyph
-function analyzeUserGlyph(name) {
-	let data = {};
-	temp = name.split("_");
-
-	if (temp[1]) {
-		data["isUserGlyph"] = true;
-		data["userGlyphUser"] = temp[0].toLowerCase();
-		data["userGlyphPage"] = temp[1].toLowerCase();
-	} else {
-		data["isUserGlyph"] = false;
-	}
-
-	return data;
-}
 
 // #firstHeading, #siteSub
 let h1 = document.getElementsByTagName("h1")[0];
@@ -69,10 +38,10 @@ gwData["lang"] = document.documentElement.lang;
 
 gwData["name"] = window.location.pathname.match(/\/([^/]+)$/)[1];
 
-temp = analyzePage(gwData.name);
+temp = unsafeWindow.SH.analyzePage(gwData.name);
 gwData["ns"] = temp.ns;
 
-temp = analyzeUserGlyph(gwData.name);
+temp = unsafeWindow.SH.analyzeUserGlyph(gwData.name);
 gwData["isUserGlyph"] = (temp.isUserGlyph ? "1" : null);
 gwData["userGlyphUser"] = temp.userGlyphUser;
 gwData["userGlyphPage"] = temp.userGlyphPage;
@@ -187,11 +156,11 @@ for (let i = 0; i < glyphImages.length; i++) {
 
 	glyphImages[i].classList.add("iThumb");
 	glyphImages[i].classList.add("iThumb" + pxSize);
-	glyphImages[i].classList.add("iThumb" + capitalizeFirstLetter(fileFormat));
+	glyphImages[i].classList.add("iThumb" + unsafeWindow.SH.capitalizeFirstLetter(fileFormat));
 
 	glyphImages[i].parentNode.classList.add("pThumb");
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
-	glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
+	glyphImages[i].parentNode.classList.add("pThumb" + unsafeWindow.SH.capitalizeFirstLetter(fileFormat));
 
 	let name = glyphImages[i].src.match(/glyph\/([^@.]+)/);
 	if (name != null) {
@@ -210,7 +179,7 @@ for (let i = 0; i < glyphImages.length; i++) {
 
 	glyphImages[i].parentNode.classList.add("pThumb");
 	glyphImages[i].parentNode.classList.add("pThumb" + pxSize);
-	//glyphImages[i].parentNode.classList.add("pThumb" + capitalizeFirstLetter(fileFormat));
+	//glyphImages[i].parentNode.classList.add("pThumb" + unsafeWindow.SH.capitalizeFirstLetter(fileFormat));
 
 	let name = glyphImages[i].src.match(/glyph\/([^@.]+)/);
 	if (name != null) {
@@ -252,7 +221,7 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 		// console.log(k, temp[k]);
 		if (temp[k] != null) {
 			temp[k].classList.add("ed");
-			temp[k].id = "ed" + capitalizeFirstLetter(k); // why not
+			temp[k].id = "ed" + unsafeWindow.SH.capitalizeFirstLetter(k); // why not
 		}
 	}
 }
