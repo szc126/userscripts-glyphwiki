@@ -1,5 +1,6 @@
 - tested with Violentmonkey v2.12.7 & Firefox 75.0
 - the execution order I use is
+  - gwScriptHelperFunctions
   - gwScriptHelper
   - gwReplacePngWithSvg
   - gwAddGlyphBoundingBoxes
