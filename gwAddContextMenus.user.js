@@ -1,63 +1,58 @@
 // ==UserScript==
 // @name        GlyphWiki: add context menus
-// @version     6
+// @version     7
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
 // @grant       none
+// @inject-into content
 // ==/UserScript==
-
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-function updateClipboard(text) {
-	navigator.clipboard.writeText(text).then(
-		function() {
-			// clipboard successfully set
-		},
-		function() {
-			// clipboard write failed
-		}
-	);
-}
-
-function removePageSuffix(name) {
-	if (name.match(/^(cdp-|u[0-9a-f]{4,})/)) {
-		return name.replace(/(-(var|itaiji)-\d{3}|-([a-z]{1,2}|)(\d{2}|))+$/g, '');
-	}
-	return name;
-}
 
 function createIThumbMenu(event) {
 	let menu = document.createElement('menu');
 	menu.id = 'iThumbMenu-' + event.target.dataset.name;
 	menu.type = 'context';
 
+	let text;
 	let menuItem;
 
+	text = event.target.dataset.name;
 	menuItem = document.createElement('menuitem');
 	menuItem.icon = event.target.src;
-	menuItem.innerText = 'グリフ名をコピー' + (event.target.dataset.name ? '：' + event.target.dataset.name : '');
-	menuItem.disabled = (!event.target.dataset.name);
+	menuItem.innerText = 'グリフ名をコピー' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		updateClipboard(event.target.dataset.name);
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
-	let nameNoSuffix = removePageSuffix(event.target.dataset.name);
+	text = unsafeWindow.SH.nameToUnicode(event.target.dataset.name);
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = 'グリフ名（接尾無し）をコピー' + (nameNoSuffix ? '：' + nameNoSuffix : '');
-	menuItem.disabled = (!nameNoSuffix);
+	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		updateClipboard(nameNoSuffix);
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
+	text = unsafeWindow.SH.removeNameSuffix(event.target.dataset.name);
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = '関連字をコピー';
-	menuItem.disabled = true;
+	menuItem.innerText = '接尾無し' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		// XXX
+		unsafeWindow.SH.updateClipboard(text);
+	};
+	menu.appendChild(menuItem);
+
+	text = unsafeWindow.SH.removeNameSuffix(event.target.dataset.name);
+	text = unsafeWindow.SH.nameToUnicode(text);
+	menuItem = document.createElement('menuitem');
+	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
+	menuItem.onclick = function() {
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
@@ -71,29 +66,50 @@ function createBodyMenu(event) {
 
 	let menuItem;
 
+	text = document.body.dataset.name;
 	menuItem = document.createElement('menuitem');
 	menuItem.icon = document.querySelector('.glyphMain .iThumb50').src;
-	menuItem.innerText = 'グリフ名をコピー' + (document.body.dataset.page ? '：' + document.body.dataset.page : '');
-	menuItem.disabled = (!document.body.dataset.page);
+	menuItem.innerText = 'グリフ名をコピー' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		updateClipboard(document.body.dataset.page);
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
-	let pageNoSuffix = removePageSuffix(document.body.dataset.page);
+	text = unsafeWindow.SH.nameToUnicode(document.body.dataset.name);
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = 'グリフ名（接尾無し）をコピー' + (pageNoSuffix ? '：' + pageNoSuffix : '');
-	menuItem.disabled = (!pageNoSuffix);
+	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		updateClipboard(pageNoSuffix);
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
+	text = unsafeWindow.SH.removeNameSuffix(document.body.dataset.name);
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = '関連字をコピー' + (document.body.dataset.related ? '：' + document.body.dataset.related : '');
-	menuItem.disabled = (!document.body.dataset.related);
+	menuItem.innerText = '接尾無し' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
 	menuItem.onclick = function() {
-		updateClipboard(document.body.dataset.related);
+		unsafeWindow.SH.updateClipboard(text);
+	};
+	menu.appendChild(menuItem);
+
+	text = unsafeWindow.SH.removeNameSuffix(document.body.dataset.name);
+	text = unsafeWindow.SH.nameToUnicode(text);
+	menuItem = document.createElement('menuitem');
+	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
+	menuItem.onclick = function() {
+		unsafeWindow.SH.updateClipboard(text);
+	};
+	menu.appendChild(menuItem);
+
+	text = document.body.dataset.related;
+	menuItem = document.createElement('menuitem');
+	menuItem.innerText = '関連字' + (text ? '：' + text : '');
+	menuItem.disabled = (!text);
+	menuItem.onclick = function() {
+		unsafeWindow.SH.updateClipboard(text);
 	};
 	menu.appendChild(menuItem);
 
@@ -104,9 +120,9 @@ function addIThumbMenu() {
 	let iThumbs = document.getElementsByClassName('iThumb');
 
 	for (let i = 0; i < iThumbs.length; i++) {
-		let menuId = 'iThumbMenu-' + iThumbs[i].dataset.page;
+		let menuId = 'iThumbMenu-' + iThumbs[i].dataset.name;
 
-		if (iThumbs[i].dataset.page) {
+		if (iThumbs[i].dataset.name) {
 			iThumbs[i].setAttribute('contextmenu', menuId);
 			iThumbs[i].addEventListener('contextmenu', function(event) {
 				if (!document.getElementById(menuId)) {
