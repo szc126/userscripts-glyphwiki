@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name GlyphWiki: add context menus
-// @version 5
+// @version 6
 // @namespace szc
 // @description -
 // @match *://glyphwiki.org/wiki/*
@@ -21,35 +21,35 @@ function updateClipboard(text) {
 	);
 }
 
-function removePageSuffix(page) {
-	if (page.match(/^(cdp-|u[0-9a-f]{4,})/)) {
-		return page.replace(/(-(var|itaiji)-\d{3}|-([a-z]{1,2}|)(\d{2}|))+$/g, '');
+function removePageSuffix(name) {
+	if (name.match(/^(cdp-|u[0-9a-f]{4,})/)) {
+		return name.replace(/(-(var|itaiji)-\d{3}|-([a-z]{1,2}|)(\d{2}|))+$/g, '');
 	}
-	return page;
+	return name;
 }
 
 function createIThumbMenu(event) {
 	let menu = document.createElement('menu');
-	menu.id = 'iThumbMenu-' + event.target.dataset.page;
+	menu.id = 'iThumbMenu-' + event.target.dataset.name;
 	menu.type = 'context';
 
 	let menuItem;
 
 	menuItem = document.createElement('menuitem');
 	menuItem.icon = event.target.src;
-	menuItem.innerText = 'グリフ名をコピー' + (event.target.dataset.page ? '：' + event.target.dataset.page : '');
-	menuItem.disabled = (!event.target.dataset.page);
+	menuItem.innerText = 'グリフ名をコピー' + (event.target.dataset.name ? '：' + event.target.dataset.name : '');
+	menuItem.disabled = (!event.target.dataset.name);
 	menuItem.onclick = function() {
-		updateClipboard(page);
+		updateClipboard(event.target.dataset.name);
 	};
 	menu.appendChild(menuItem);
 
-	let pageNoSuffix = removePageSuffix(event.target.dataset.page);
+	let nameNoSuffix = removePageSuffix(event.target.dataset.name);
 	menuItem = document.createElement('menuitem');
-	menuItem.innerText = 'グリフ名（接尾無し）をコピー' + (pageNoSuffix ? '：' + pageNoSuffix : '');
-	menuItem.disabled = (!pageNoSuffix);
+	menuItem.innerText = 'グリフ名（接尾無し）をコピー' + (nameNoSuffix ? '：' + nameNoSuffix : '');
+	menuItem.disabled = (!nameNoSuffix);
 	menuItem.onclick = function() {
-		updateClipboard(pageNoSuffix);
+		updateClipboard(nameNoSuffix);
 	};
 	menu.appendChild(menuItem);
 
