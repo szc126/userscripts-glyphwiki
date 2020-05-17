@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name GlyphWiki: add context menus
-// @version 6
-// @namespace szc
+// @name        GlyphWiki: add context menus
+// @version     6
+// @namespace   szc
 // @description -
-// @match *://glyphwiki.org/wiki/*
-// @match *://*.glyphwiki.org/wiki/*
-// @run-at document-idle
-// @grant none
+// @match       *://glyphwiki.org/wiki/*
+// @match       *://*.glyphwiki.org/wiki/*
+// @run-at      document-idle
+// @grant       none
 // ==/UserScript==
 
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard

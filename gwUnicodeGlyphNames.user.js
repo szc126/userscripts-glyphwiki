@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name GlyphWiki: convert Unicode codepoints to Unicode in glyph names
-// @version 1
-// @namespace szc
+// @name        GlyphWiki: convert Unicode codepoints to Unicode in glyph names
+// @version     1
+// @namespace   szc
 // @description -
-// @match *://glyphwiki.org/wiki/*
-// @match *://*.glyphwiki.org/wiki/*
-// @run-at document-idle
-// @grant none
+// @match       *://glyphwiki.org/wiki/*
+// @match       *://*.glyphwiki.org/wiki/*
+// @run-at      document-idle
+// @grant       none
 // ==/UserScript==
 
 let as = document.querySelectorAll('a[href*="/wiki/u"]:not([href*="action="])'); // good enough

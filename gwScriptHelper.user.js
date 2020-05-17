@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name GlyphWiki script helper
-// @version 10
-// @namespace szc
+// @name        GlyphWiki script helper
+// @version     10
+// @namespace   szc
 // @description -
-// @match *://glyphwiki.org/wiki/*
-// @match *://*.glyphwiki.org/wiki/*
-// @grant none
+// @match       *://glyphwiki.org/wiki/*
+// @match       *://*.glyphwiki.org/wiki/*
+// @grant       none
 // ==/UserScript==
 
 gwData = {};

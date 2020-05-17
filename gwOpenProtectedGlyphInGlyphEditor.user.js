@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name GlyphWiki: open protected glyph in glyph editor
-// @version 2
-// @namespace szc
+// @name        GlyphWiki: open protected glyph in glyph editor
+// @version     2
+// @namespace   szc
 // @description -
-// @match *://glyphwiki.org/wiki/*
-// @match *://*.glyphwiki.org/wiki/*
-// @run-at document-idle
-// @grant none
+// @match       *://glyphwiki.org/wiki/*
+// @match       *://*.glyphwiki.org/wiki/*
+// @run-at      document-idle
+// @grant       none
 // ==/UserScript==
 
 if (gwData.protected) {

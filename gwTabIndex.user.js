@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name GlyphWiki: tab index and access key
-// @version 4
-// @namespace szc
+// @name        GlyphWiki: tab index and access key
+// @version     4
+// @namespace   szc
 // @description -
-// @match *://glyphwiki.org/wiki/*
-// @match *://*.glyphwiki.org/wiki/*
-// @run-at document-idle
-// @grant none
+// @match       *://glyphwiki.org/wiki/*
+// @match       *://*.glyphwiki.org/wiki/*
+// @run-at      document-idle
+// @grant       none
 // ==/UserScript==
 
 // XXX: mutationObserver
