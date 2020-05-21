@@ -1,15 +1,40 @@
 // ==UserScript==
-// @name        GlyphWiki: open protected glyph in glyph editor
-// @version     2
+// @name        GlyphWiki: open protected glyphs in the glyph editor
+// @version     3
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
 // @grant       none
+// @inject-into content
 // ==/UserScript==
 
-if (gwData.protected) {
+let i18nStrings = {};
+
+i18nStrings["ja"] = {
+	"Edit as new glyph using the glyph editor": "新規グリフとして\n専用エディタで編集する",
+}
+
+i18nStrings["en"] = {
+	"Edit as new glyph using the glyph editor": "Edit as new glyph\nusing the glyph editor",
+}
+
+i18nStrings["ko"] = {
+	"Edit as new glyph using the glyph editor": "Edit as new glyph\nusing the glyph editor",
+}
+
+i18nStrings["zhs"] = {
+	"Edit as new glyph using the glyph editor": "Edit as new glyph\nusing the glyph editor",
+}
+
+i18nStrings["zht"] = {
+	"Edit as new glyph using the glyph editor": "Edit as new glyph\nusing the glyph editor",
+}
+
+// ----
+
+if (document.body.dataset.protected) {
 	let br = document.createElement("br");
 	let form = document.createElement("form");
 	let inputs = [];
@@ -33,14 +58,14 @@ if (gwData.protected) {
 
 	inputs[2].type = "hidden";
 	inputs[2].name = "related";
-	inputs[2].value = gwData.related;
+	inputs[2].value = document.body.dataset.related;
 
 	inputs[3].type = "hidden";
 	inputs[3].name = "edittime";
 	/*inputs[3].value = Date.now();*/
 
 	inputs[4].type = "submit";
-	inputs[4].value = "新規グリフとして\n専用エディタで編集する";
+	inputs[4].value = i18nStrings[document.documentElement.lang]["Edit as new glyph using the glyph editor"];
 
 	for (let i = 0; i < inputs.length; i++) {
 		form.appendChild(inputs[i]);
