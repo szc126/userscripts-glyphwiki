@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        GlyphWiki: add glyph bounding boxes
-// @version     6
+// @version     7
 // @namespace   szc
 // @description Add bounding boxes to images, similar to the one in the Glyph Editor
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*/*
 // @run-at      document-idle
 // @grant       none
+// @inject-into content
 // ==/UserScript==
 
 let images = document.querySelectorAll('.iThumb50, .iThumb100, .iThumb200');
