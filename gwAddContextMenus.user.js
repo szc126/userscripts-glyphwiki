@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: add context menus
-// @version     7
+// @version     8
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -23,8 +23,9 @@ function createIThumbMenu(event) {
 	menuItem.icon = event.target.src;
 	menuItem.innerText = 'グリフ名をコピー' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -32,8 +33,9 @@ function createIThumbMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -41,8 +43,9 @@ function createIThumbMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = '接尾無し' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -51,8 +54,9 @@ function createIThumbMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -68,11 +72,12 @@ function createBodyMenu(event) {
 
 	text = document.body.dataset.name;
 	menuItem = document.createElement('menuitem');
-	menuItem.icon = document.querySelector('.glyphMain .iThumb50').src;
+	menuItem.icon = (document.querySelector('.glyphMain .iThumb50') ? document.querySelector('.glyphMain .iThumb50').src : false);
 	menuItem.innerText = 'グリフ名をコピー' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -80,8 +85,9 @@ function createBodyMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -89,8 +95,9 @@ function createBodyMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = '接尾無し' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -99,8 +106,9 @@ function createBodyMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = 'Unicode 化' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -108,8 +116,9 @@ function createBodyMenu(event) {
 	menuItem = document.createElement('menuitem');
 	menuItem.innerText = '関連字' + (text ? '：' + text : '');
 	menuItem.disabled = (!text);
-	menuItem.onclick = function() {
-		unsafeWindow.SH.updateClipboard(text);
+	menuItem.dataset.text = text;
+	menuItem.onclick = function(event) {
+		unsafeWindow.SH.updateClipboard(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
