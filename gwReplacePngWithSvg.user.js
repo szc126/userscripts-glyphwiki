@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        GlyphWiki: replace PNG with SVG
-// @version     5
+// @version     6
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
 // @grant       none
+// @inject-into content
 // ==/UserScript==
 
 let pngs = document.querySelectorAll(".iThumbPng:not(.iThumbError)"); // querySelectorAll because it's not live and .length won't change...
