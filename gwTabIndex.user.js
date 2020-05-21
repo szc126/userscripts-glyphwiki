@@ -1,17 +1,16 @@
 // ==UserScript==
-// @name        GlyphWiki: tab index and access key
-// @version     4
+// @name        GlyphWiki: add tab indexes and access keys
+// @version     5
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
 // @grant       none
+// @inject-into content
 // ==/UserScript==
 
-// XXX: mutationObserver
-
-if (gwData.action == 'edit' || gwData.action == 'preview') {
+if (document.body.dataset.action == 'edit' || document.body.dataset.action == 'preview') {
 	let tabIndex = {
 		edGlyphEditor: 101,
 		edRelated: 102,
