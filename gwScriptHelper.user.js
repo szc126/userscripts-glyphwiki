@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki script helper
-// @version     11
+// @version     12
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -210,8 +210,9 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 	temp = {
 		glyphEditorForm: document.querySelector("form[action=\"/glyphEditor.cgi\"]"),
 		glyphEditor: document.querySelector("form[action=\"/glyphEditor.cgi\"] input[type=submit]"),
-		related: document.querySelector(".textarea input[name=related]"),
-		textbox: document.querySelector(".textarea textarea[name=textbox]"),
+		related: document.querySelector("input[name=related]"),
+		textbox: document.querySelector("textarea[name=textbox]"),
+		textboxMeta: document.querySelector("textarea[name=textbox2]"), /* existing ID: #metatext */
 		summary: document.querySelector(".toolbox input[name=summary]"),
 		preview: document.querySelector(".toolbox input[type=submit]:nth-of-type(2)"),
 		submit: document.querySelector(".toolbox input[type=submit]:nth-of-type(3)"),
