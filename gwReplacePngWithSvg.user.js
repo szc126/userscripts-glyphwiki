@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: replace PNG with SVG
-// @version     6
+// @version     7
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -28,6 +28,12 @@ style.innerHTML = `
 
 	.glyphMain.pThumb200.pThumbSvg + .glyphMain.pThumb200.pThumbPng {
 		display: none;
+	}
+
+	/* gwAddGlyphBoundingBoxes */
+
+	.iThumbSvg.iThumb50:hover ~ .x-thumbBoundingBox {
+		transform: scale(3);
 	}
 `;
 document.head.appendChild(style);
