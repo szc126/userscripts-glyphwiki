@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: add tab indexes and access keys
-// @version     5
+// @version     6
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -15,9 +15,10 @@ if (document.body.dataset.action == 'edit' || document.body.dataset.action == 'p
 		edGlyphEditor: 101,
 		edRelated: 102,
 		edTextbox: 103,
-		edSummary: 104,
-		edPreview: 105,
-		edSubmit: 106,
+		edTextboxMeta: 104,
+		edSummary: 105,
+		edPreview: 106,
+		edSubmit: 107,
 	}
 
 	for (let id in tabIndex) {
