@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki script helper
-// @version     12
+// @version     13
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -210,7 +210,7 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 	temp = {
 		glyphEditorForm: document.querySelector("form[action=\"/glyphEditor.cgi\"]"),
 		glyphEditor: document.querySelector("form[action=\"/glyphEditor.cgi\"] input[type=submit]"),
-		related: document.querySelector("input[name=related]"),
+		related: document.querySelector("input[type=text][name=related]"),
 		textbox: document.querySelector("textarea[name=textbox]"),
 		textboxMeta: document.querySelector("textarea[name=textbox2]"), /* existing ID: #metatext */
 		summary: document.querySelector(".toolbox input[name=summary]"),
@@ -219,7 +219,7 @@ if (gwData.action == "edit" || gwData.action == "preview") {
 	}
 
 	for (let k in temp) {
-		// console.log(k, temp[k]);
+		//console.log(k, temp[k]);
 		if (temp[k] != null) {
 			temp[k].classList.add("ed");
 			temp[k].id = "ed" + unsafeWindow.SH.capitalizeFirstLetter(k); // why not
