@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: add tab indexes and access keys
-// @version     6
+// @version     2023.01.01
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -15,7 +15,7 @@ if (document.body.dataset.action == 'edit' || document.body.dataset.action == 'p
 		edGlyphEditor: 101,
 		edRelated: 102,
 		edTextbox: 103,
-		edTextboxMeta: 104,
+		edTextboxMetaJoho: 104,
 		edSummary: 105,
 		edPreview: 106,
 		edSubmit: 107,
@@ -30,12 +30,13 @@ if (document.body.dataset.action == 'edit' || document.body.dataset.action == 'p
 }
 
 let accessKeys = {
+	// refer to MediaWiki
 	caMain: 'c',
 	caTalk: 't',
 	caEdit: 'e',
 	caHistory: 'h',
 
-	edGlyphEditor: 'a', // not related to MediaWiki
+	edGlyphEditor: 'a', // no MediaWiki equivalent
 	edPreview: 'p',
 	edSubmit: 's',
 }

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: add glyph bounding boxes
-// @version     7
+// @version     2023.01.01
 // @namespace   szc
 // @description Add bounding boxes to images, similar to the one in the Glyph Editor
 // @match       *://glyphwiki.org/wiki/*
@@ -10,7 +10,7 @@
 // @inject-into content
 // ==/UserScript==
 
-let images = document.querySelectorAll('.iThumb50, .iThumb100, .iThumb200');
+let images = document.querySelectorAll('.glyph, .thumb');
 for (let i = 0; i < images.length; i++) {
 	let image = images.item(i);
 	let wrapper = document.createElement('div');
@@ -42,15 +42,15 @@ style.innerHTML = `
 		pointer-events: none;
 	}
 
-	.iThumb200 ~ .x-thumbBoundingBox {
+	[height="200"] ~ .x-thumbBoundingBox {
 		--target: 200px;
 	}
 
-	.iThumb100 ~ .x-thumbBoundingBox {
+	[height="100"] ~ .x-thumbBoundingBox {
 		--target: 100px;
 	}
 
-	.iThumb50 ~ .x-thumbBoundingBox {
+	[height="50"] ~ .x-thumbBoundingBox {
 		--target: 50px;
 	}
 
@@ -73,7 +73,7 @@ style.innerHTML = `
 	/* 100 */
 
 	div.right_pane .thumb ~ .x-thumbBoundingBox,
-	div.right_pane .thumb100 ~ .x-thumbBoundingBox {
+	div.right_pane [height="100"] ~ .x-thumbBoundingBox {
 		margin:
 			calc((var(--margin)) + 2px)
 		;

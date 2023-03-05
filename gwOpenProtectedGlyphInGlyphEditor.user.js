@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: open protected glyphs in the glyph editor
-// @version     3
+// @version     2023.01.01
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*

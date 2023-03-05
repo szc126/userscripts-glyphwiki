@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki script helper - functions
-// @version     1
+// @version     2023.01.01
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -10,12 +10,6 @@
 // ==/UserScript==
 
 unsafeWindow.SH = {};
-
-// Capitalize first letter of a string
-// (https://stackoverflow.com/a/1026087)
-unsafeWindow.SH.capitalizeFirstLetter = function(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
 unsafeWindow.SH.updateClipboard = function(text) {
@@ -30,35 +24,24 @@ unsafeWindow.SH.updateClipboard = function(text) {
 }
 
 // Extract data from a page name
-unsafeWindow.SH.analyzePage = function(name) {
+unsafeWindow.SH.analyzeName = function(name) {
 	let data = {};
-	temp = name.split(":");
+	name = name.match(/^(.+:)?(.+_)?(.*?)(@.+)?$/);
 
-	data["ns"] = (temp[1] ? temp[0].toLowerCase() : "glyph");
+	data["ns"] = (name[1] && name[1].slice(0, -1) || "glyph");
+	data["userGlyphUser"] = (name[2] && name[2].slice(0, -1));
+	data["userGlyphName"] = name[3];
+	data["revision"] = name[4];
 
-	return data;
-}
-
-// Extract data from the page name of a user glyph
-unsafeWindow.SH.analyzeUserGlyph = function(name) {
-	let data = {};
-	temp = name.split("_");
-
-	if (temp[1]) {
-		data["isUserGlyph"] = true;
-		data["userGlyphUser"] = temp[0].toLowerCase();
-		data["userGlyphPage"] = temp[1].toLowerCase();
-	} else {
-		data["isUserGlyph"] = false;
-	}
+	data["name"] = (name[2] || "") + name[3];
 
 	return data;
 }
 
 unsafeWindow.SH.nameToUnicode = function(name) {
 	return name
-		.replace(/-?u([0-9a-f]{4,})/g, function(_, m1) {
-			return String.fromCodePoint('0x' + m1);
+		.replace(/-?u([0-9a-f]{4,})/g, function(_, hex) {
+			return String.fromCodePoint('0x' + hex);
 		})
 		.replace(/-?cdp-([0-9a-f]{4,})/g, '〓')
 	;
