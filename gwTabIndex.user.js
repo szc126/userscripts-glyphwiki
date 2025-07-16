@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki: add tab indexes and access keys
-// @version     2023.01.01
+// @version     2025.07.16
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -37,6 +37,7 @@ let accessKeys = {
 	caHistory: 'h',
 
 	edGlyphEditor: 'a', // no MediaWiki equivalent
+	edSummary: 'b',
 	edPreview: 'p',
 	edSubmit: 's',
 }
