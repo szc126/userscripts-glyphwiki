@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        GlyphWiki script helper - functions
-// @version     2023.01.01
+// @version     2026.02.01
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
-// @grant       none
+// @grant       unsafeWindow
 // @inject-into content
 // ==/UserScript==
 
