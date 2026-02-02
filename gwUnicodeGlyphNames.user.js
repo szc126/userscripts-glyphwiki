@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name        GlyphWiki: convert Unicode codepoints to Unicode in glyph names
-// @version     2023.01.01
+// @version     2026.02.02
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
-// @grant       none
+// @grant       unsafeWindow
 // @inject-into content
 // ==/UserScript==
 
