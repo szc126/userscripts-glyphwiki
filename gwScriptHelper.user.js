@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        GlyphWiki script helper
-// @version     2026.02.01
+// @version     2026.02.02
 // @namespace   szc
 // @description -
 // @match       *://glyphwiki.org/wiki/*
@@ -24,6 +24,8 @@ temp = new URLSearchParams(window.location.search);
 for (let pair of temp) {
 	gwData[pair[0]] = pair[1];
 }
+// XXX: it seems like the Preview button never sends us to `?action=preview`
+gwData["action"] = document.querySelector('.warning2.notice') ? "preview" : gwData["action"];
 gwData["action"] ??= "view";
 
 // Extract data from page elements
