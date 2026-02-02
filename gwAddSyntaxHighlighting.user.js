@@ -2,7 +2,7 @@
 // @name        GlyphWiki: add syntax highlighting
 // @author      ChatGPT, szc
 // @namespace   szc
-// @version     2026.02.02
+// @version     2026.02.02-20
 // @description Replace text fields with a CodeMirror editor
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
@@ -12,7 +12,12 @@
 // @inject-into content
 // @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/mode/simple.min.js
-// @resource    CM_CSS https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/searchcursor.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/search.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/scroll/annotatescrollbar.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/matchesonscrollbar.min.js
+// @resource    css_codemirror https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css
+// @resource    css_matchesonscrollbar https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/matchesonscrollbar.min.css
 // ==/UserScript==
 
 "use strict";
@@ -22,12 +27,10 @@
 // https://codemirror.net/5/demo/simplemode.html
 
 if ((document.body.dataset.action == 'edit' || document.body.dataset.action == 'preview') && (document.body.dataset.ns != 'glyph')) {
-	// Inject CodeMirror CSS
+	// Inject CSS
 	const style = document.createElement("style");
-	style.textContent = GM_getResourceText("CM_CSS");
-	document.head.appendChild(style);
-
-	// Append personal CSS
+	style.textContent = GM_getResourceText("css_codemirror");
+	style.textContent += GM_getResourceText("css_matchesonscrollbar");
 	style.textContent += `
 		.CodeMirror {
 			border: 1px solid ButtonBorder;
@@ -50,6 +53,7 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 			position: relative;
 		}
 	`;
+	document.head.appendChild(style);
 
 	// Create mode
 	CodeMirror.defineSimpleMode("glyphwiki", {
@@ -258,67 +262,95 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 	});
 
 	// Inline thumbnail decoration
-	function decorateInlineThumbnails() {
-		// Remove previous decorations
-		document.body.querySelectorAll(".CodeMirror .cm-gw-thumb").forEach(el => el.remove());
+	function decorateLines(from, to) {
+		//console.log('received!', from, to);
 
+		// Scan lines for glyphs
 		const doc = cm.getDoc();
-		const text = doc.getValue();
+		let collection = [];
+		for (let line_i = from; line_i <= to; line_i++) {
+			// Remove previous decorations for this line
+			// XXX: this does leave stale ones behind, if viewport change is dramatic. should we care
+			document.body.querySelectorAll(`.cm-gw-thumb[data-line="${line_i}"]`).forEach(el => el.remove());
 
-		// Find all links
-		// XXX: can this be updated to rely on tokens
-		// XXX: can this be updated to draw only visible items as needed
-		for (const match of text.matchAll(/(\[\[)([^\]]+ |)([a-z0-9-@_]+)(\]\])/g)) {
-			const name = match[3];
+			const tokens = cm.getLineTokens(line_i);
 
-			// Find position in document
-			const from = doc.posFromIndex(match.index);
+			collection[line_i] = {};
+			collection[line_i].starts = [];
+			collection[line_i].strings = [];
+			let searching = false;
+			for (let token_i = 0; token_i < tokens.length; token_i++) {
+				if (tokens[token_i].type == "link link-gw-thumb") {
+					collection[line_i].starts.push(tokens[token_i].start);
+					searching = true;
+				}
+				if (searching && tokens[token_i].type == "link") {
+					collection[line_i].strings.push(tokens[token_i].string);
+					searching = false;
+				}
+			}
+		}
 
-			// Create thumbnail element
-			const span = document.createElement("span");
-			span.className = "cm-gw-thumb";
-			span.style.display = "inline-block";
+		// Create thumbnails
+		for (const key in collection) {
+			const line_i = parseInt(key);
+			for (let glyph_i = 0; glyph_i < collection[line_i].starts.length; glyph_i++) {
+				const from = collection[line_i].starts[glyph_i];
+				const name = collection[line_i].strings[glyph_i];
+				//console.log(line_i, from, name);
 
-			const img = document.createElement("img");
-			img.src = `//glyphwiki.org/glyph/${name}.50px.png`;
-			img.classList.add("thumb");
-			img.dataset.name = name;
-			img.loading = "lazy";
+				// Create thumbnail element
+				const span = document.createElement("span");
+				span.className = "cm-gw-thumb";
+				span.style.display = "inline-block";
+				span.dataset.line = line_i;
 
-			const link = document.createElement("a");
-			link.href = `//glyphwiki.org/wiki/${name}`;
-			link.dataset.ns = "glyph";
-			link.dataset.name = name;
+				const img = document.createElement("img");
+				img.src = `//glyphwiki.org/glyph/${name}.50px.png`;
+				img.classList.add("thumb");
+				img.dataset.name = name;
+				img.loading = "lazy";
 
-			link.appendChild(img);
-			span.appendChild(link);
+				const link = document.createElement("a");
+				link.href = `//glyphwiki.org/wiki/${name}`;
+				link.dataset.ns = "glyph";
+				link.dataset.name = name;
 
-			// Attach as a CodeMirror widget, inline after the link
-			cm.addWidget(from, span, false);
+				link.appendChild(img);
+				span.appendChild(link);
+
+				// Attach as a CodeMirror widget, below and before the link
+				cm.addWidget({line: line_i, ch: from}, span);
+			}
 		}
 	}
-
-	// Debounce updates
-	let timer = null;
-	cm.on("changes", () => {
-		clearTimeout(timer);
-		timer = setTimeout(decorateInlineThumbnails, 250);
-
-		// Add "stay on page / leave page" prompt
-		// https://stackoverflow.com/q/1119289
-		unsafeWindow.onbeforeunload = function() {
-			return true;
-		};
-	});
 
 	if (document.body.dataset.action == 'preview') {
 		// Add "stay on page / leave page" prompt
 		// https://stackoverflow.com/q/1119289
-		unsafeWindow.onbeforeunload = function() {
+		unsafeWindow.onbeforeunload = () => {
 			return true;
 		};
 	}
 
-	// Initial render
-	decorateInlineThumbnails();
+	// Decorate initially visible lines
+	const initialViewport = cm.getViewport();
+	decorateLines(initialViewport.from, initialViewport.to);
+
+	// Redecorate changed lines
+	cm.on("changes", (cm, changes) => {
+		const from = changes[0].from.line;
+		const to = changes[0].to.line;
+		decorateLines(from, to);
+
+		// Add "stay on page / leave page" prompt
+		// https://stackoverflow.com/q/1119289
+		unsafeWindow.onbeforeunload = () => {
+			return true;
+		};
+	});
+	// Decorate newly visible lines
+	cm.on("viewportChange", (cm, from, to) => {
+		decorateLines(from, to);
+	});
 }
