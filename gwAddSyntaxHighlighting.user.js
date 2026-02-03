@@ -262,23 +262,29 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 		unsafeWindow.onbeforeunload = null;
 	});
 
-	// Inline thumbnail decoration
+	// Decorate lines
 	function decorateLines(from, to) {
-		//console.log('received!', from, to);
+		//console.log('decorating:', from, to);
 
 		// Scan lines for glyphs
 		const doc = cm.getDoc();
 		let collection = [];
 		for (let line_i = from; line_i <= to; line_i++) {
 			// Remove previous decorations for this line
-			// XXX: this does leave stale ones behind, if viewport change is dramatic. should we care
 			document.body.querySelectorAll(`.cm-gw-thumb[data-line="${line_i}"]`).forEach(el => el.remove());
 
-			const tokens = cm.getLineTokens(line_i);
+			if (line_i >= doc.lineCount()) {
+				// `cm.getLineTokens()` returns the tokens of the last line if a line doesn't exist??
+				// which gets silly for `change` events
+				// AND the other `.on()` events seem to be returning last line + 1 for `to`?
+				continue;
+			}
 
+			const tokens = cm.getLineTokens(line_i);
 			collection[line_i] = {};
 			collection[line_i].starts = [];
 			collection[line_i].strings = [];
+
 			let searching = false;
 			for (let token_i = 0; token_i < tokens.length; token_i++) {
 				if (tokens[token_i].type == "link link-gw-thumb") {
@@ -300,7 +306,6 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 				const name = collection[line_i].strings[glyph_i];
 				//console.log(line_i, from, name);
 
-				// Create thumbnail element
 				const span = document.createElement("span");
 				span.className = "cm-gw-thumb";
 				span.style.display = "inline-block";
@@ -319,8 +324,6 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 
 				link.appendChild(img);
 				span.appendChild(link);
-
-				// Attach as a CodeMirror widget, below and before the link
 				cm.addWidget({line: line_i, ch: from}, span);
 			}
 		}
@@ -338,10 +341,27 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 	const initialViewport = cm.getViewport();
 	decorateLines(initialViewport.from, initialViewport.to);
 
-	// Redecorate changed lines
-	cm.on("changes", (cm, changes) => {
-		const from = changes[0].from.line;
-		const to = changes[0].to.line;
+	cm.on("refresh", (cm) => {
+		//console.log("refresh");
+		// Recalculate on editor resize
+		const initialViewport = cm.getViewport();
+		decorateLines(initialViewport.from, initialViewport.to);
+	});
+
+	cm.on("viewportChange", (cm, from, to) => {
+		//console.log("viewportChange");
+		// Decorate newly visible lines
+		// `viewportChange`: adding a new line fires `change` and `viewportChange` simultaneously.
+		// `scroll`: really fires on every single scroll.
+		// bleh.
+		decorateLines(from, to);
+	});
+
+	cm.on("change", (cm, change) => {
+		//console.log("change");
+		// Redecorate changed lines
+		const from = change.from.line;
+		const to = change.to.line;
 		decorateLines(from, to);
 
 		// Add "stay on page / leave page" prompt
@@ -349,9 +369,5 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 		unsafeWindow.onbeforeunload = () => {
 			return true;
 		};
-	});
-	// Decorate newly visible lines
-	cm.on("viewportChange", (cm, from, to) => {
-		decorateLines(from, to);
 	});
 }
