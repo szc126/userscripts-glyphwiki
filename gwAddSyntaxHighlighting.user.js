@@ -11,14 +11,14 @@
 // @grant       GM_getResourceText
 // @grant       unsafeWindow
 // @inject-into content
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/mode/simple.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/searchcursor.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/search.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/scroll/annotatescrollbar.min.js
-// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/matchesonscrollbar.min.js
-// @resource    css_codemirror https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css
-// @resource    css_matchesonscrollbar https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/search/matchesonscrollbar.min.css
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/codemirror.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/mode/simple.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/searchcursor.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/search.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/scroll/annotatescrollbar.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/matchesonscrollbar.min.js
+// @resource    css_codemirror https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/codemirror.min.css
+// @resource    css_matchesonscrollbar https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/matchesonscrollbar.min.css
 // ==/UserScript==
 
 "use strict";
