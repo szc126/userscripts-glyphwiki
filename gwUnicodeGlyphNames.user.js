@@ -12,7 +12,7 @@
 // @inject-into content
 // ==/UserScript==
 
-let as = document.querySelectorAll('a[data-name^="u"], a[data-name*="-u"]');
+let as = document.querySelectorAll('a[data-name^="u"], a[data-name*="-u"], a[data-name^="cdp-"]');
 for (let i = 0; i < as.length; i++) {
 	for (let j = 0; j < as[i].childNodes.length; j++) {
 		let textOrig = as[i].childNodes[j].textContent;
@@ -43,6 +43,7 @@ style.innerHTML = `
 		color: black;
 		opacity: 0.75;
 		ruby-align: center;
+		font-family: "sans-serif", "CDP外字-ALL";
 	}
 `;
 document.head.appendChild(style);

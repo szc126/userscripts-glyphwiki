@@ -27,12 +27,56 @@ unsafeWindow.SH.analyzeName = function(name) {
 	return data;
 }
 
+// https://glyphwiki.org/wiki/Group:CDP外字-ALL
+var UNI_PUA_START = '\ue000';
+var UNI_PUA_END = '\uf8ff';
+var EUDC_TO_PUA = 0xEE1B;
+unsafeWindow.SH.hexToUnicode = function(hex) {
+	if (hex.startsWith('cdp-')) {
+		// https://kanji-database.sourceforge.net/ids/ids.html
+		// XXX: `(YY>129)` seems to be a typo? is it? idk what's going on
+		let xx = parseInt(hex.slice(4, 6), 16);
+		let yy = parseInt(hex.slice(6, 8), 16);
+		return String.fromCodePoint(
+			((xx - 128) * 157) + ((yy<129)?(yy-64):(yy-98)) + EUDC_TO_PUA
+		);
+	}
+	return String.fromCodePoint(hex.replace('u', '0x'));
+}
+
+unsafeWindow.SH.unicodeToHex = function(char) {
+	if (char >= UNI_PUA_START && char <= UNI_PUA_END) {
+		// https://glyphwiki.org/wiki/Group:CDP外字
+		let a = char.codePointAt(0) - EUDC_TO_PUA;
+		let xx = Math.floor(a / 157) + 128;
+		let yy = (a % 157);
+		yy += (yy < 62) ? 64 : 98;
+		return 'cdp-' + xx.toString(16).padStart(2, 0) + yy.toString(16).padStart(2, 0);
+	}
+	return 'u' + char.codePointAt(0).toString(16).padStart(4, 0);
+}
+
 unsafeWindow.SH.nameToUnicode = function(name) {
 	return name
-		.replace(/-?u([0-9a-f]{4,})/g, function(_, hex) {
-			return String.fromCodePoint('0x' + hex);
+		.replace(/-?(u[0-9a-f]{4,})/g, function(_, hex) {
+			return unsafeWindow.SH.hexToUnicode(hex);
 		})
-		.replace(/-?cdp-([0-9a-f]{4,})/g, '〓')
+		.replace(/-?(cdp-[0-9a-f]{4,})/g, function(_, hex) {
+			return unsafeWindow.SH.hexToUnicode(hex);
+		})
+	;
+}
+
+unsafeWindow.SH.unicodeToName = function(name) {
+	if (name.codePointAt(0) < 128) {
+		// do not codepoint-ize ASCII names like `sandbox`
+		return;
+	}
+	return name
+		.replace(/(?<![@-].*)([^@-])/gu, function(_, char) {
+			return '-' + unsafeWindow.SH.unicodeToHex(char);
+		})
+		.replace(/^-/, '')
 	;
 }
 
