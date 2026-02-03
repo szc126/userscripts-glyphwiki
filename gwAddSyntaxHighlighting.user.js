@@ -17,8 +17,10 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/search.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/scroll/annotatescrollbar.min.js
 // @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/matchesonscrollbar.min.js
+// @require     https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/hint/show-hint.min.js
 // @resource    css_codemirror https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/codemirror.min.css
 // @resource    css_matchesonscrollbar https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/search/matchesonscrollbar.min.css
+// @resource    css_showhint https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.20/addon/hint/show-hint.min.css
 // ==/UserScript==
 
 "use strict";
@@ -30,8 +32,9 @@
 if ((document.body.dataset.action == 'edit' || document.body.dataset.action == 'preview') && (document.body.dataset.ns != 'glyph')) {
 	// Inject CSS
 	const style = document.createElement("style");
-	style.textContent = GM_getResourceText("css_codemirror");
+	style.textContent += GM_getResourceText("css_codemirror");
 	style.textContent += GM_getResourceText("css_matchesonscrollbar");
+	style.textContent += GM_getResourceText("css_showhint");
 	style.textContent += `
 		.CodeMirror {
 			border: 1px solid ButtonBorder;
@@ -39,6 +42,9 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 			font-size: 1.5em;
 			line-height: calc(var(--multiplier) * 1.2em);
 			--multiplier: 2;
+		}
+		.CodeMirror, .CodeMirror-hints {
+			font-family: "monospace", "CDP外字-ALL";
 		}
 		.cm-underline {
 			text-decoration: underline;
@@ -243,6 +249,30 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 		],
 	});
 
+	function nameHint(cm, hintOptions) {
+		const cur = cm.getCursor()
+		const token = cm.getTokenAt(cur);
+		if (token.type !== "link" || token.string === "[[" || token.string === "]]") {
+			return;
+		}
+
+		const name = token.string;
+		const nameUni = unsafeWindow.SH.nameToUnicode(name);
+		const nameGw = unsafeWindow.SH.unicodeToName(name);
+		const suggestion = (name === nameUni) ? nameGw : nameUni;
+		if (!suggestion) {
+			return;
+		}
+
+		return {
+			list: [
+				suggestion,
+			],
+			from: {line: cur.line, ch: token.start},
+			to: {line: cur.line, ch: token.end},
+		};
+	}
+
 	// Convert to CodeMirror
 	const textarea = document.getElementById("edTextbox");
 	const cm = CodeMirror.fromTextArea(textarea, {
@@ -250,6 +280,15 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 		mode: "glyphwiki",
 		lineNumbers: true,
 		lineWrapping: true,
+		hintOptions: {
+			hint: nameHint,
+			completeSingle: false,
+			// TODO: a way for Enter (JP IME style) and Space (ZH IME STYLE) to
+			// accept the autocomplete without triggering text change event,
+			// which otherwise opens up the autocomplete again,
+			// which extraKeys can't fix?
+			//extraKeys: {},
+		},
 	});
 
 	// Revert to textarea
@@ -369,5 +408,9 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 		unsafeWindow.onbeforeunload = () => {
 			return true;
 		};
+	});
+
+	cm.on("cursorActivity", (cm, change) => {
+		cm.showHint();
 	});
 }
