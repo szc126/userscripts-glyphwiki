@@ -151,7 +151,7 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 			},
 			// ハイパーリンク
 			{
-				regex: /https?:\/\/\S+/,
+				regex: /https?:\/\/[^\s()]+/,
 				token: "link",
 			},
 			{
