@@ -8,3 +8,4 @@
   - gwTabIndex
   - gwAddContextMenus
   - gwUnicodeGlyphNames
+  - gwAddSyntaxHighlighting
