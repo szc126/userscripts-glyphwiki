@@ -30,7 +30,7 @@ function createThumbMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -40,7 +40,7 @@ function createThumbMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -50,7 +50,7 @@ function createThumbMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -61,7 +61,7 @@ function createThumbMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -82,7 +82,7 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -92,7 +92,7 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -102,7 +102,7 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -113,7 +113,7 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 
@@ -123,7 +123,7 @@ function createBodyMenu(event) {
 	menuItem.disabled = (!text);
 	menuItem.dataset.text = text;
 	menuItem.onclick = function(event) {
-		unsafeWindow.SH.updateClipboard(this.dataset.text);
+		navigator.clipboard.writeText(this.dataset.text);
 	};
 	menu.appendChild(menuItem);
 

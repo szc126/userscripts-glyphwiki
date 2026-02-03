@@ -15,18 +15,6 @@
 // Install functions
 unsafeWindow.SH = {};
 
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
-unsafeWindow.SH.updateClipboard = function(text) {
-	navigator.clipboard.writeText(text).then(
-		function() {
-			//console.log();
-		},
-		function() {
-			console.log('Could not write to clipboard! ' + text);
-		}
-	);
-}
-
 unsafeWindow.SH.analyzeName = function(name) {
 	let data = {};
 	name = name.match(/^(?:(.+):)?(?:(.+)_)?(.+?)(?:@(\d+))?$/);
