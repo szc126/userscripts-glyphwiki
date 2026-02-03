@@ -37,7 +37,7 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 			border: 1px solid ButtonBorder;
 			height: 35em;
 			font-size: 1.5em;
-			line-height: calc(var(--multiplier) * 1em);
+			line-height: calc(var(--multiplier) * 1.2em);
 			--multiplier: 2;
 		}
 		.cm-underline {
@@ -50,7 +50,7 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 			width: calc(var(--multiplier) * 2ch);
 			height: calc(var(--multiplier) * 2ch);
 			left: calc(var(--multiplier) * -2ch);
-			top: calc(var(--multiplier) * -1.1em);
+			top: calc(var(--multiplier) * -1.2em);
 			position: relative;
 		}
 	`;
