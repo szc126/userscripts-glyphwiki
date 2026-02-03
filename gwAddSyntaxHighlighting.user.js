@@ -156,16 +156,17 @@ if ((document.body.dataset.action == 'edit' || document.body.dataset.action == '
 				token: "quote",
 			},
 			// ハイパーリンク
+			// https://glyphwiki.org/wiki/GlyphWiki:グリフを登録する
 			{
 				regex: /https?:\/\/[^\s()]+/,
 				token: "link",
 			},
 			{
-				regex: /(\[\[)([^\]]+)( )([a-z0-9-@_]+)(\]\])/,
+				regex: /(\[\[)([^\]]+)( )([a-z][a-z0-9-@_]{3,58}[a-z0-9])(\]\])/,
 				token: ["link.link-gw-thumb", "qualifier", null, "link", "link"],
 			},
 			{
-				regex: /(\[\[)([a-z0-9-@_]+)(\]\])/,
+				regex: /(\[\[)([a-z][a-z0-9-@_]{3,58}[a-z0-9])(\]\])/,
 				token: ["link.link-gw-thumb", "link", "link"],
 			},
 			{
