@@ -13,6 +13,7 @@
 // ==/UserScript==
 
 // https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/85
+// https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/103
 
 function createThumbMenu(event) {
 	let menu = document.createElement('menu');
