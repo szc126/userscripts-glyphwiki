@@ -1,10 +1,12 @@
 // ==UserScript==
-// @name        GlyphWiki: add glyph bounding boxes
-// @version     2023.01.01
 // @namespace   szc
+// @name        GlyphWiki: add glyph bounding boxes
+// @version     2026.02.03
+// @author      sz
 // @description Add bounding boxes to images, similar to the one in the Glyph Editor
+// @icon        https://glyphwiki.org/glyph/u25a1.50px.png
 // @match       *://glyphwiki.org/wiki/*
-// @match       *://*.glyphwiki.org/wiki/*/*
+// @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
 // @grant       none
 // @inject-into content

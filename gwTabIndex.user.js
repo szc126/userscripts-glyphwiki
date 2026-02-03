@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name        GlyphWiki: add tab indexes and access keys
-// @version     2025.07.16
 // @namespace   szc
+// @name        GlyphWiki: add tab indexes and access keys
+// @version     2026.02.03
+// @author      sz
 // @description -
+// @icon        https://glyphwiki.org/glyph/u9375.50px.png
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle

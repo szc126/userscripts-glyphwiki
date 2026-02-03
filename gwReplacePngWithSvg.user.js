@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name        GlyphWiki: replace PNG with SVG
-// @version     2023.01.01
 // @namespace   szc
+// @name        GlyphWiki: replace PNG with SVG
+// @version     2026.02.03
+// @author      sz
 // @description -
+// @icon        https://glyphwiki.org/glyph/u259a.50px.png
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle

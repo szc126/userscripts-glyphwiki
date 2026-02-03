@@ -1,9 +1,10 @@
 // ==UserScript==
-// @name        GlyphWiki: add syntax highlighting
-// @author      ChatGPT, szc
 // @namespace   szc
-// @version     2026.02.02-20
+// @name        GlyphWiki: add syntax highlighting
+// @version     2026.02.03
+// @author      ChatGPT, sz
 // @description Replace text fields with a CodeMirror editor
+// @icon        https://glyphwiki.org/glyph/u660e.50px.png
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle

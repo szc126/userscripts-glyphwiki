@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name        GlyphWiki: convert Unicode codepoints to Unicode in glyph names
-// @version     2026.02.02
 // @namespace   szc
+// @name        GlyphWiki: convert Unicode codepoints to Unicode in glyph names
+// @version     2026.02.03
+// @author      sz
 // @description -
+// @icon        https://glyphwiki.org/glyph/ufffd.50px.png
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle

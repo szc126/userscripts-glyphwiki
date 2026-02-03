@@ -1,12 +1,10 @@
 // ==UserScript==
-// @name        GlyphWiki script helper - functions
-// @version     2026.02.01
 // @namespace   szc
+// @name        GlyphWiki: base functions (DEPRECATED)
+// @version     2026.02.03
+// @author      sz
 // @description -
-// @match       *://glyphwiki.org/wiki/*
-// @match       *://*.glyphwiki.org/wiki/*
-// @grant       unsafeWindow
-// @inject-into content
+// @icon        https://glyphwiki.org/glyph/do-not-use.50px.png
 // ==/UserScript==
 
 unsafeWindow.SH = {};
