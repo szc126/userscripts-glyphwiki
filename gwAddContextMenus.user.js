@@ -8,7 +8,7 @@
 // @match       *://glyphwiki.org/wiki/*
 // @match       *://*.glyphwiki.org/wiki/*
 // @run-at      document-idle
-// @grant       none
+// @grant       unsafeWindow
 // @inject-into content
 // ==/UserScript==
 
