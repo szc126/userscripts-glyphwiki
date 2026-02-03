@@ -27,17 +27,14 @@ unsafeWindow.SH.updateClipboard = function(text) {
 	);
 }
 
-// Extract data from a page name
 unsafeWindow.SH.analyzeName = function(name) {
 	let data = {};
-	name = name.match(/^(.+:)?(.+_)?(.*?)(@.+)?$/);
+	name = name.match(/^(?:(.+):)?(?:(.+)_)?(.+?)(?:@(\d+))?$/);
 
-	data["ns"] = (name[1] && name[1].slice(0, -1) || "glyph");
-	data["userGlyphUser"] = (name[2] && name[2].slice(0, -1));
-	data["userGlyphName"] = name[3];
+	data["ns"] = (name[1] ? name[1].toLowerCase() : "glyph");
+	data["user"] = name[2];
+	data["name"] = name[3];
 	data["revision"] = name[4];
-
-	data["name"] = (name[2] || "") + name[3];
 
 	return data;
 }

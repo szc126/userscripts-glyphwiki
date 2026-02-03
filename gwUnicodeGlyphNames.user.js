@@ -12,7 +12,7 @@
 // @inject-into content
 // ==/UserScript==
 
-let as = document.querySelectorAll('a[data-name^="u"], a[data-user-glyph-name^="u"], a[data-name*="-u"]');
+let as = document.querySelectorAll('a[data-name^="u"], a[data-name*="-u"]');
 for (let i = 0; i < as.length; i++) {
 	for (let j = 0; j < as[i].childNodes.length; j++) {
 		let textOrig = as[i].childNodes[j].textContent;
